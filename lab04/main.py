@@ -15,3 +15,6 @@ for city in total:
 print(len(lines))
 print(0)
 print(total[best] / count[best])
+
+if_name_ == "_main_":
+    main()
