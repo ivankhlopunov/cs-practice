@@ -3,7 +3,7 @@ def parse_record(line: str) -> dict:
     if len(fields) != 3:
         raise ValueError(f"ожидалось 3 поля, получено {len(fields)}")
 
-    city, temp_str, date = fields
+    city, temperature_str, date = fields
 
     if not city:
         raise ValueError("пустое название города")
@@ -11,9 +11,9 @@ def parse_record(line: str) -> dict:
         raise ValueError("пустая дата")
 
     try:
-        temp = float(temp_str)
+        temp = float(temperature_str)
     except ValueError:
-        raise ValueError(f"температура '{temp_str}' — не число")
+        raise ValueError(f"температура '{temperature_str}' — не число")
 
     return {"city": city, "temp": temp, "date": date}
 

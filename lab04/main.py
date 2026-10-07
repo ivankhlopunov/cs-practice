@@ -1,20 +1,24 @@
-import sys 
-from stats import average_by_city, read_valid, warmest_city
-def main() -> None:
-    lines = sys.stdin.read().splitlines()
-    total = {}
-    count = {}
-for line in lines:
-    city, temp, date = line.split(";")
-    total[city] = total.get(city, 0) + float(temp)
-    count[city] = count.get(city, 0) + 1
-best = ""
-for city in total:
-    if best == "" or total[city] / count[city] > total[best] / count[best]:
-        best = city
-print(len(lines))
-print(0)
-print(total[best] / count[best])
+import sys
+from stats import parse_record, average_by_city, read_valid, warmest_city
 
-if_name_ == "_main_":
+
+def main():
+    lines = sys.stdin.read().splitlines()
+    records = read_valid(lines)
+
+    empty_count = sum(1 for line in lines if line.strip() == "")
+    error_count = len(lines) - empty_count - len(records)
+
+    print(len(records))
+    print(error_count)
+
+    if records:
+        averages = average_by_city(records)
+        city = warmest_city(records)
+        print(f"{averages[city]:.1f}")
+    else:
+        print("0.0")
+
+
+if __name__ == "__main__":
     main()
