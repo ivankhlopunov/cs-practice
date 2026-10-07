@@ -1,9 +1,9 @@
 import sys 
 from stats import average_by_city, read_valid, warmest_city
 def main() -> None:
-lines = sys.stdin.read().splitlines()
-total = {}
-count = {}
+    lines = sys.stdin.read().splitlines()
+    total = {}
+    count = {}
 for line in lines:
     city, temp, date = line.split(";")
     total[city] = total.get(city, 0) + float(temp)
