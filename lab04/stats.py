@@ -14,11 +14,11 @@ def parse_record(line: str) -> dict:
         raise ValueError("пустая дата")
 
     try:
-        temperature_str = float(temperature_str)
+        temperature = float(temperature_str)
     except ValueError:
         raise ValueError(f"температура '{temperature_str}' — не число")
 
-    return {"city": city, "temperature_str": temperature, "date": date}
+    return {"city": city, "temperature": temperature_str, "date": date}
 
 
 def read_valid(lines: list[str]) -> list[dict]:
