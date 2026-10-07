@@ -37,4 +37,12 @@ def average_by_city(records: list[dict]) -> dict:
         counts[city] = counts.get(city, 0) + 1
     return {city: round(totals[city] / counts[city], 1) for city in totals}
 
-    
+def warmest_city(records: list[dict]) -> str:
+    averages = average_by_city(records)
+    if not averages:
+        return ""
+    best = ""
+    for city in sorted(averages):
+        if best == "" or averages[city] > averages[best]:
+            best = city
+    return best
