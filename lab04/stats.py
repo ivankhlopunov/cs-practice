@@ -18,7 +18,7 @@ def parse_record(line: str) -> dict:
     except ValueError:
         raise ValueError(f"температура '{temperature_str}' — не число")
 
-    return {"city": city, "temperature": temperature_str, "date": date}
+    return {"city": city, "temperature": temperature, "date": date}
 
 
 def read_valid(lines: list[str]) -> list[dict]:
