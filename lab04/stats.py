@@ -4,9 +4,6 @@ def parse_record(line: str) -> dict:
         raise ValueError(f"ожидалось 3 поля, получено {len(fields)}")
 
     city, temperature_str, date = fields
-    city = city.strip()
-    temperature = temperature.strip()
-    date = date.strip()
 
     if not city:
         raise ValueError("пустое название города")
