@@ -1,5 +1,7 @@
 def parse_record(line: str) -> dict:
-  
+    parts = line.split(";")
+    if len(fields) != 3:
+        raise ValueError(f"wait 3 parts", received {len(parts)}: {line!r}")
     city, temp, date = parts
     city = city.strip()
     date = date.strip()
