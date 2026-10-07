@@ -1,4 +1,5 @@
 def parse_record(line: str) -> dict:
+  
     city, temp, date = parts
     city = city.strip()
     date = date.strip()
