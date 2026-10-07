@@ -5,7 +5,7 @@ def parse_record(line: str) -> dict:
 
     city, temperature_str, date = fields
     city = city.strip()
-    temperature_str = temperature_str.strip()
+    temperature_str = temperature_str.strip().replace(",", ".")
     date = date.strip()
 
     if not city:
