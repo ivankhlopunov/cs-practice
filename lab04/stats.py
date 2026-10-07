@@ -1,55 +1,19 @@
 def parse_record(line: str) -> dict:
-    parts = line.split(";")
-    if len(parts) != 3:
-        raise ValueError(f"wait 3 parts", received {len(parts)}: {line!r}")
-                         
-    city, temp, date = parts
-    city = city.strip()
-    date = date.strip()
+    fields = line.split(";")
+    if len(fields) != 3:
+        raise ValueError(f"ожидалось 3 поля, получено {len(fields)}")
+
+    city, temp_str, date = fields
 
     if not city:
-        raise ValueError(f"empty city in line: {line!r}")
+        raise ValueError("пустое название города")
     if not date:
-        raise ValueError(f"empty date in line: {line!r}")
+        raise ValueError("пустая дата")
 
     try:
-        temperature = float(temp)
-    except ValueError as exc:
-        raise ValueError(f"invalid temperature {temp!r} in line: {line!r}") from exc
+        temp = float(temp_str)
+    except ValueError:
+        raise ValueError(f"температура '{temp_str}' — не число")
 
-    return {"city": city, "temperature": temperature, "date": date}
-
-def read_valid(lines: list[str]) -> list[dict]
- """Parse journal lines."""
-    records = []
-    for line in lines:
-        if not line.strip():
-            continue
-        try:
-            records.append(parse_record(line))
-        except ValueError:
-            continue
-    return records
-
-def average_by_city(records: list[dict]) -> dict:
-    """Calculates the average temperature"""
-    totals = {}
-    counts = {}
-    for r in records:
-        city = r["city"]
-        totals[city] = totals.get(city, 0.0) + r["temp"]
-        counts[city] = counts.get(city, 0) + 1
-
-    averages = {}
-    for city in totals:
-        averages[city] = round(totals[city] / counts[city], 1)
-    return averages
-
-def warmest_city(records: list[dict]) -> str:
-    """Returns the city with the highest temperature"""
-    if not records:
-        return ""
-
-    averages = average_by_city(records)
-    sorted_cities = sorted(averages.keys(), key=lambda c: (-averages[c], c))
-    return sorted_cities[0]
+    return {"city": city, "temp": temp, "date": date}
+    
