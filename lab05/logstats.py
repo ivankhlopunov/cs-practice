@@ -67,13 +67,13 @@ def top_errors(lines: list[str], n: int) -> dict:
     return result[:n]
 
 def format_report(counts: dict, errors: list[list]) -> str:
-    report = ["Отчёт по журналу", ""]
+    report = "Отчёт по журналу\n\n"
     for level, count in sorted(counts.items()):
         report += level + ": " + str(count) + "\n"
 
     report += "\nЧастые ошибки:\n"
 
     for message, count in errors:
-        report += "- " + message + " - " + str(count) + "\n"
+        report += "- " + message + " — " + str(count) + "\n"
 
     return report
