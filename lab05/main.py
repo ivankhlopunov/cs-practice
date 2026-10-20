@@ -1,9 +1,23 @@
-from logstats import count_levels, top_errors, format_report
+from logstats import parse_event, top_errors, format_report
 
 path = input().strip()
 
+counts = {"DEBUG": 0, "ERROR": 0, "INFO": 0, "WARNING": 0, "BROKEN": 0}
+
 with open(path, encoding="utf-8") as log:
-    counts = count_levels(log)
+    for line in log:
+        parts = line.strip().split(maxsplit=2)
+
+        if len(parts) < 3:
+            counts["BROKEN"] += 1
+        else:
+            time, level, message = parts
+
+            if level not in counts or level == "BROKEN":
+                counts["BROKEN"] += 1
+            else:
+                event = parse_event(line)
+                counts[event["level"]] += 1
 
 total = counts["DEBUG"] + counts["ERROR"] + counts["INFO"] + counts["WARNING"]
 
