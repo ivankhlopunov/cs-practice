@@ -20,10 +20,16 @@ def parse_event(line: str) -> dict:
     return{"time": time, "level": level, "message": message}
 
 def count_levels(lines: list[str]) -> dict:
-    parts = line.strip().split(maxsplit=2)
-    if not is_valid_event(line):
-        raise ValueError("Некорректная строка")
+    counts = {}
+    for line in lines:
+        if not line.strip():
+            continue
+        if not is_valid_event(line):
+            counts["BROKEN"] = counts.get("BROKEN", 0) + 1
+        else:
+            event = parse_event(line)
+            level = event["level"]
 
-    time, level, message = parts
+            counts[level] = counts.get(level, 0) + 1
 
-    return{"time": time, "level": level, "message": message}
+    return counts
