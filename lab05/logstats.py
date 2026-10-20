@@ -31,7 +31,7 @@ def count_levels(lines: list[str]) -> dict:
             counts["BROKEN"] = counts.get("BROKEN", 0) + 1
             continue
 
-        level = parts
+        level = parts[1]
 
         if level not in LEVELS:
             counts["BROKEN"] = counts.get("BROKEN", 0) + 1
