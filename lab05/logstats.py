@@ -24,12 +24,15 @@ def count_levels(lines: list[str]) -> dict:
     for line in lines:
         if not line.strip():
             continue
-        if not is_valid_event(line):
+
+        parts = line.strip().split(maxsplit=2)
+
+        if len(parts) < 3:
+            counts["BROKEN"] = counts.get("BROKEN", 0) + 1
+            continue
+        if level not in LEVELS:
             counts["BROKEN"] = counts.get("BROKEN", 0) + 1
         else:
-            event = parse_event(line)
-            level = event["level"]
-
             counts[level] = counts.get(level, 0) + 1
 
     return counts
