@@ -31,7 +31,7 @@ def count_levels(lines: list[str]) -> dict:
             counts["BROKEN"] = counts.get("BROKEN", 0) + 1
             continue
 
-        level = parts[1]
+        time, level, message = parts
 
         if level not in LEVELS:
             counts["BROKEN"] = counts.get("BROKEN", 0) + 1
@@ -39,3 +39,30 @@ def count_levels(lines: list[str]) -> dict:
             counts[level] = counts.get(level, 0) + 1
 
     return counts
+
+def top_errors(lines: list[str], n: int) -> dict:
+    errors = {}
+    for line in lines:
+        if not line.strip():
+            continue
+
+        parts = line.strip().split(maxsplit=2)
+
+        if len(parts) < 3:
+            continue
+
+        time, level, message = parts
+
+        if level not in ("DEBUG", "INFO", "WARNING", "ERROR"):
+            continue
+
+        if level == "ERROR":
+            errors[message] = errors.get(message, 0) + 1
+
+    result = []
+
+    for message, count in errors.items():
+        result.append([message, count])
+
+    return result[:n]
+
