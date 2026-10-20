@@ -18,3 +18,12 @@ def parse_event(line: str) -> dict:
         raise ValueError("Неизвестный уровень")
 
     return{"time": time, "level": level, "message": message}
+
+def count_levels(lines: list[str]) -> dict:
+    parts = line.strip().split(maxsplit=2)
+    if not is_valid_event(line):
+        raise ValueError("Некорректная строка")
+
+    time, level, message = parts
+
+    return{"time": time, "level": level, "message": message}
