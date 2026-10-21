@@ -19,7 +19,7 @@ with open(path, encoding="utf-8") as log:
                 event = parse_event(line)
                 counts[event["level"]] += 1
 
-total = counts["DEBUG"] + counts["ERROR"] + counts["INFO"] + counts["WARNING"]
+total = (counts["DEBUG"] + counts["ERROR"] + counts["INFO"] + counts["WARNING"])
 
 error_count = counts["ERROR"]
 broken_count = counts["BROKEN"]
