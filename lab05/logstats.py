@@ -64,6 +64,12 @@ def top_errors(lines: list[str], n: int) -> dict:
     for message, count in errors.items():
         result.append([message, count])
 
+    def sort_key(item):
+        message, count = item
+        return (-count, message)
+
+    result.sort(key=sort_key)
+
     return result[:n]
 
 def format_report(counts: dict, errors: list[list]) -> str:
