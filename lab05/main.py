@@ -1,4 +1,4 @@
-from logstats import parse_event, top_errors, format_report
+from logstats import parse_event, count_levels, top_errors, format_report
 
 path = input().strip()
 
