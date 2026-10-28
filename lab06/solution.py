@@ -13,3 +13,17 @@ def count_by_extension(paths: list[str]) -> dict[str, int]:
         counts[extension] = counts.get(extension, 0) + 1
      
     return counts
+
+def deepest_path(paths: list[str]) -> str:
+    if not paths:
+        return ""
+    
+    result = paths[0]
+    
+    for path in paths:
+        if path.count("/") > result.count("/"):
+            result = path
+        elif path.count("/") == result.count("/") and path < result:
+            result = path
+            
+    return result
