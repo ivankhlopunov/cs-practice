@@ -8,8 +8,8 @@ def csv_to_records(text: str) -> list[dict]:
         values = line.split(",")
         record = {}
         
-        for i in range(len(captions)):
-            record[captions[i]] = values[i]
+        for key, value in zip(captions, values):
+            record[key.strip()] = value.strip()
             
         records.append(record)
         
@@ -38,13 +38,24 @@ def parse_settings(lines: list[str]) -> dict:
                 settings[key] = []
             elif value.isdigit():
                 settings[key] = int(value)
-            elif value.replace(".", "", 1).isdigit():
-                settings[key] = float(value)
-            elif value == "true" or value == "yes":
+            elif value.replace(".", "", 1).replace(".", "", 1).isdigit():
+                settings[key] = float(value.replace(",", "."))
+            elif value == "true" or value.lower() == "yes":
                 settings[key] = True
-            elif value == "false" or value == "no":
+            elif value == "false" or value.lower() == "no":
                 settings[key] = False
             else:
                 settings[key] = value
                 
     return settings
+
+
+def merge_by_key(rows: list[dict], extra: dict, key: str = id) -> list[dict]:
+    result = []
+    
+    for row in rows:
+        new_row = extra.get(row.get(key), {}).copy()
+        new_row.update(row)
+        result.append(new_row)
+        
+    return result
