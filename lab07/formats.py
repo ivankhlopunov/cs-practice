@@ -1,7 +1,7 @@
 def csv_to_records(text: str) -> list[dict]:
-    lines = text.strip().split("\n")
-    captions = lines[0].strip(",")
+    lines = text.strip().splitlines()
     
+    captions = lines[0].strip(",")
     records = []
     
     for line in lines[1:]:
@@ -34,15 +34,15 @@ def parse_settings(lines: list[str]) -> dict:
             value = value.strip()
             current_key = key
             
-            if value == "":
+            if not value == "":
                 settings[key] = []
             elif value.isdigit():
                 settings[key] = int(value)
             elif value.replace(".", "", 1).replace(".", "", 1).isdigit():
                 settings[key] = float(value.replace(",", "."))
-            elif value == "true" or value.lower() == "yes":
+            elif value.lower() in ("true", "yes"):
                 settings[key] = True
-            elif value == "false" or value.lower() == "no":
+            elif value.lower() in ("false", "no"):
                 settings[key] = False
             else:
                 settings[key] = value
@@ -59,3 +59,7 @@ def merge_by_key(rows: list[dict], extra: dict, key: str = id) -> list[dict]:
         result.append(new_row)
         
     return result
+
+
+def records_to_json(records: list[dict]) -> str:
+    return json.dumps(records, ensure_ascii=False, indent=2, sort_keys=True)
